@@ -43,7 +43,7 @@
         this.load.image('ground', 'assets/platform.png');
         this.load.image('star', 'assets/star.png');
         this.load.image('bomb', 'assets/bomb.png');
-        this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+        this.load.spritesheet('dude', 'assets/moi.png', { frameWidth: 32, frameHeight: 42 });
     }
 
     function create ()
@@ -58,11 +58,13 @@
         platforms.create(50, 250, 'ground');
         platforms.create(750, 220, 'ground');
 
-        player = this.physics.add.sprite(100, 450, 'dude');
+        // The first part of the code creates the sprite:
+        player = this.physics.add.sprite(100, 450, 'dude'); // The sprite was created via the Physics Game Object Factory (this.physics.add) which means it has a Dynamic Physics body by default.
 
-        player.setBounce(0.2);
-        player.setCollideWorldBounds(true);
+        player.setBounce(0.2); // This means when it lands after jumping it will bounce ever so slightly.
+        player.setCollideWorldBounds(true); // The sprite is then set to collide with the world bounds. The bounds, by default, are on the outside of the game dimensions. As we set the game to be 800 x 600 then the player won't be able to run outside of this area. It will stop the player from being able to run off the edges of the screen or jump through the top.
 
+        // Phaser supports flipping sprites to save on animation frames, The 'left' animation uses frames 0, 1, 2 and 3 and runs at 10 frames per second. The 'repeat -1' value tells the animation to loop.
         this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -82,6 +84,7 @@
             frameRate: 10,
             repeat: -1
         });
+        // In Phaser 3 the Animation Manager is a global system. Animations created within it are globally available to all Game Objects. They share the base animation data while managing their own timelines. This allows you to define a single animation once and apply it to as many Game Objects as you require. 
     }
 
     function update ()
