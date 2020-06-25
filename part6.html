@@ -19,7 +19,7 @@
         width: 800,
         height: 600,
         physics: {
-            default: 'arcade',
+            default: 'arcade', // Phaser has support for a variety of different physics systems, each acting as a plugin available to any Phaser Scene. At the time of writing it ships with Arcade Physics, Impact Physics and Matter.js Physics
             arcade: {
                 gravity: { y: 300 },
                 debug: false
@@ -43,7 +43,7 @@
         this.load.image('ground', 'assets/platform.png');
         this.load.image('star', 'assets/star.png');
         this.load.image('bomb', 'assets/bomb.png');
-        this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+        this.load.spritesheet('dude', 'assets/moi.png', { frameWidth: 32, frameHeight: 42 });
     }
 
     function create ()
@@ -58,10 +58,11 @@
         platforms.create(50, 250, 'ground');
         platforms.create(750, 220, 'ground');
 
-        player = this.physics.add.sprite(100, 450, 'dude');
+        player = this.physics.add.sprite(200, 350, 'dude');
 
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
+        // player.body.setGravityY(600)
 
         this.anims.create({
             key: 'left',
@@ -83,7 +84,7 @@
             repeat: -1
         });
 
-        this.physics.add.collider(player, platforms);
+        this.physics.add.collider(player, platforms); // to set up collisions 
     }
 
     function update ()
